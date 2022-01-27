@@ -10,6 +10,11 @@ resource "aws_cloudfront_distribution" "distribution" {
     connection_attempts = 3
     connection_timeout  = 10
 
+    custom_header {
+      name  = "referer"
+      value = var.website_referer
+    }
+
     custom_origin_config {
       http_port              = 80
       https_port             = 443

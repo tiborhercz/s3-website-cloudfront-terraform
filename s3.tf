@@ -19,14 +19,6 @@ resource "aws_s3_bucket" "website" {
 resource "aws_s3_bucket" "www_website" {
   bucket = "www.${var.domain_name}"
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
   website {
     redirect_all_requests_to = "https://${var.domain_name}"
   }
@@ -69,5 +61,11 @@ data "aws_iam_policy_document" "website" {
       aws_s3_bucket.website.arn,
       "${aws_s3_bucket.website.arn}/*",
     ]
+
+    condition {
+      test     = "StringLike"
+      values   = [var.website_referer]
+      variable = "aws:Referer"
+    }
   }
 }
