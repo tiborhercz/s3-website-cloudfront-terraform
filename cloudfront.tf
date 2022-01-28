@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
     custom_header {
       name  = "referer"
-      value = var.website_referer
+      value = random_password.referer
     }
 
     custom_origin_config {

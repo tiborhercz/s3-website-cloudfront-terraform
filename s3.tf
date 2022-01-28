@@ -46,6 +46,11 @@ resource "aws_s3_bucket_policy" "website" {
   policy = data.aws_iam_policy_document.website.json
 }
 
+resource "random_password" "referer" {
+  length  = 32
+  special = false
+}
+
 data "aws_iam_policy_document" "website" {
   statement {
     principals {
@@ -64,7 +69,7 @@ data "aws_iam_policy_document" "website" {
 
     condition {
       test     = "StringLike"
-      values   = [var.website_referer]
+      values   = [random_password.referer]
       variable = "aws:Referer"
     }
   }
