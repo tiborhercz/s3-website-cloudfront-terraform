@@ -14,7 +14,8 @@ This Terraform template uses two CloudFront distributions. One is used for the m
 
 ## Prevent direct S3 object access
 
-To prevent the direct access to the S3 bucket objects I added a referer header condition to the S3 bukcet policy.
+To prevent direct access to the S3 bucket objects a referer header condition is added to the S3 bucket policy.
+
 The S3 bucket policy below makes sure only GET requests are allowed if the `Referer` is present.
 CloudFront is set up to always send the `Referer` header with the `SECRET_STRING`. This allows CloudFront to access the objects in your S3 bucket.
 
