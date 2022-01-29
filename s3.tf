@@ -16,8 +16,8 @@ resource "aws_s3_bucket" "website" {
   }
 }
 
-resource "aws_s3_bucket" "www_website" {
-  bucket = "www.${var.domain_name}"
+resource "aws_s3_bucket" "redirect" {
+  bucket = var.redirect_domain_name
 
   website {
     redirect_all_requests_to = "https://${var.domain_name}"
@@ -46,6 +46,11 @@ resource "aws_s3_bucket_policy" "website" {
   policy = data.aws_iam_policy_document.website.json
 }
 
+resource "aws_s3_bucket_policy" "redirect" {
+  bucket = aws_s3_bucket.redirect.id
+  policy = data.aws_iam_policy_document.redirect_website.json
+}
+
 resource "random_password" "referer" {
   length  = 32
   special = false
@@ -69,7 +74,31 @@ data "aws_iam_policy_document" "website" {
 
     condition {
       test     = "StringLike"
-      values   = [random_password.referer]
+      values   = [random_password.referer.result]
+      variable = "aws:Referer"
+    }
+  }
+}
+
+data "aws_iam_policy_document" "redirect_website" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      aws_s3_bucket.redirect.arn,
+      "${aws_s3_bucket.redirect.arn}/*",
+    ]
+
+    condition {
+      test     = "StringLike"
+      values   = [random_password.referer.result]
       variable = "aws:Referer"
     }
   }

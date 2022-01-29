@@ -41,7 +41,7 @@ CloudFront is set up to always send the `Referer` header with the `SECRET_STRING
 }
 ```
 
-## Github action deployment
+# Github action deployment
 In this example I will show you how to deploy to the S3 bucket and invalidate the cache from a GitHub Action.
 
 To make the example below work you have to set the following [secrets in GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
@@ -52,6 +52,7 @@ To make the example below work you have to set the following [secrets in GitHub]
 
 **Important**: **DO NOT** use your root or full admin access AWS access key and secret. 
 
+These two GitHub actions steps will deploy the `public/` to S3 and will invalidate the CloudFront cache for all paths.
 ```yaml
   - name: Deploy to S3
     run: aws s3 sync public/ s3://${{ secrets.S3_BUCKET_NAME }}/ --delete --region INSERT_YOUR_AWS_REGION_HERE
@@ -132,5 +133,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
 ```
