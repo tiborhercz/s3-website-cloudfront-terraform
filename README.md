@@ -4,8 +4,8 @@ Terraform template for a S3 website with a CloudFront distribution.
 
 Features:
 - HTTPS
-- Cloudfront caching
-- Redirect from http to https
+- CloudFront caching
+- Redirects to https
 - Security headers set: [SecurityHeadersPolicy](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html#managed-response-headers-policies-security)
 - Redirect from www.example.com to example.com
 - Bucket object not directly accessible
