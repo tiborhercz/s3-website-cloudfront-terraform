@@ -54,7 +54,7 @@ To make the example below work you have to set the following [secrets in GitHub]
 
 **Important**: **DO NOT** use your root or full admin access AWS access key and secret. 
 
-These two GitHub actions steps will deploy the `public/` to S3 and will invalidate the CloudFront cache for all paths.
+These two GitHub workflow steps will deploy the `public/` to S3 and invalidates the CloudFront cache for all paths.
 ```yaml
   - name: Deploy to S3
     run: aws s3 sync public/ s3://${{ secrets.S3_BUCKET_NAME }}/ --delete --region INSERT_YOUR_AWS_REGION_HERE
@@ -101,7 +101,9 @@ Instead, create a new user specifically for the GitHub deployment and give it th
 ```
 
 ### Full example
-In the example below I am making use of [Hugo](https://gohugo.io/) a Golang static website generator.
+
+Below you will find an example with a complete GitHub workflow file. This workflow builds the static website with [Hugo](https://gohugo.io/), deploys to S3 and invalidates the cache in CloudFront.
+
 ```yaml
 name: Build and deploy
 
