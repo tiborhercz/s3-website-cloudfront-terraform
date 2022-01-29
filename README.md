@@ -10,6 +10,8 @@ Features:
 - Redirect from www.example.com to example.com
 - Bucket object not directly accessible
 
+This Terraform template uses two CloudFront distributions. One is used for the main domain and the other is used for the domain to be redirected to the main domain. The redirect is done with S3 website redirect requests option. 
+
 ## Prevent direct S3 object access
 
 To prevent the direct access to the S3 bucket objects I added a referer header condition to the S3 bukcet policy.
