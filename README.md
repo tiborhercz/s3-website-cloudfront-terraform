@@ -7,7 +7,7 @@ Features:
 - CloudFront caching
 - Redirects to https
 - Security headers set: [SecurityHeadersPolicy](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html#managed-response-headers-policies-security)
-- Redirect from www.example.com to example.com
+- Redirect from `www.example.com` to `example.com`
 - Bucket object not directly accessible
 
 This Terraform template uses two CloudFront distributions. One is used for the main domain and the other is used for the domain to be redirected to the main domain. The redirect is done with S3 website redirect requests option. 
